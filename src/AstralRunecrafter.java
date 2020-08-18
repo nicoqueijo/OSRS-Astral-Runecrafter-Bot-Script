@@ -6,6 +6,7 @@ import org.dreambot.api.utilities.Timer;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,11 +58,6 @@ public class AstralRunecrafter extends AbstractScript {
       -Run to bank
      */
 
-    /**
-     * Changes to make:
-     * -Add breaks.
-     */
-
     public enum State {
         BANKING, RUNNING_TO_ALTAR, RUNECRAFTING, RUNNING_TO_BANK
     }
@@ -69,18 +65,20 @@ public class AstralRunecrafter extends AbstractScript {
     public State state = State.BANKING;
 
     public Timer timer = new Timer();
-    private final long timeToStop = (long) 60 * 1000 * random(165, 180); // Almost 3 hours
+    private final long timeToStop = (long) 60 * 1000 * random(225, 240); // Almost 4 hours
     private List<Node> nodes = new ArrayList<>();
     private int beginningXp;
+
+    private final int LVL_91_XP = 5902831;
 
     public boolean areBigPouchesFull = false;
     public boolean areSmallPouchesFull = false;
 
     private final int PURE_ESSENCE_PRICE = 2;
-    private final int STAMINA_POTION_4_PRICE = 4751;
-    private final int LAW_RUNE_PRICE = 144;
-    private final int COSMIC_RUNE_PRICE = 125;
-    private final int ASTRAL_RUNE_PRICE = 153;
+    private final int STAMINA_POTION_4_PRICE = 5333;
+    private final int LAW_RUNE_PRICE = 143;
+    private final int COSMIC_RUNE_PRICE = 138;
+    private final int ASTRAL_RUNE_PRICE = 161;
 
     public int astralRunesProduced = 0;
     public int pureEssenceConsumed = 0;
@@ -93,12 +91,13 @@ public class AstralRunecrafter extends AbstractScript {
     public void onPaint(Graphics graphics) {
         super.onPaint(graphics);
         graphics.setColor(Color.BLACK);
-        graphics.drawString("Astral Runecrafter", 330, 365);
-        graphics.drawString("Time running: " + timer.formatTime(), 330, 383);
-        graphics.drawString("Total XP gained: " + formatInt(calculateXP()), 330, 401);
-        graphics.drawString("Hourly XP rate: " + formatInt(timer.getHourlyRate(calculateXP())), 330, 419);
-        graphics.drawString("Total profit made: " + formatInt(calculateProfit()), 330, 437);
-        graphics.drawString("Hourly profit rate: " + formatInt(timer.getHourlyRate(calculateProfit())), 330, 455);
+        graphics.drawString("Time running: " + timer.formatTime(), 330, 363);
+        graphics.drawString("Total XP gained: " + formatInt(calculateXP()), 330, 381);
+        graphics.drawString("Hourly XP rate: " + formatInt(timer.getHourlyRate(calculateXP())), 330, 399);
+        graphics.drawString("Total profit made: " + formatInt(calculateProfit()), 330, 417);
+        graphics.drawString("Hourly profit rate: " + formatInt(timer.getHourlyRate(calculateProfit())), 330, 435);
+        graphics.drawString("XP until level 91: " + formatInt(remainingXPuntil91()), 330, 453);
+        graphics.drawString("Hours until level 91: " + decimalFormat(remainingXPuntil91() / (double) timer.getHourlyRate(calculateXP())), 330, 471);
     }
 
     @Override
@@ -133,7 +132,7 @@ public class AstralRunecrafter extends AbstractScript {
     }
 
     public int sleepTime() {
-        return random(150, 175);
+        return random(25, 50);
     }
 
     private void checkStop() {
@@ -159,9 +158,17 @@ public class AstralRunecrafter extends AbstractScript {
         return NumberFormat.getNumberInstance(Locale.US).format(num);
     }
 
+    private String decimalFormat(double num) {
+        return new DecimalFormat("0.00").format(num);
+    }
+
     private int calculateXP() {
         int currentXp = getSkills().getExperience(Skill.RUNECRAFTING);
         return currentXp - beginningXp;
+    }
+
+    private int remainingXPuntil91() {
+        return LVL_91_XP - getSkills().getExperience(Skill.RUNECRAFTING);
     }
 
     private int calculateProfit() {

@@ -26,7 +26,7 @@ public class RunToAltarNode extends Node {
             main.getWalking().walk(ALTAR_AREA.getRandomTile());
             sleep(150, 300);
             drinkStaminaPotion();
-            sleep(1350, 1700);
+            sleep(150, 300);
         }
         main.state = AstralRunecrafter.State.RUNECRAFTING;
         return main.sleepTime();
