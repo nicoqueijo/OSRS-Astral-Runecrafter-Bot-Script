@@ -1,3 +1,5 @@
+import org.dreambot.api.methods.container.impl.bank.BankType;
+
 import static org.dreambot.api.methods.MethodProvider.sleep;
 
 /**
@@ -23,8 +25,9 @@ public class FillBigPouchesNode extends Node {
         main.getInventory().interact(GIANT_POUCH_ID, "Fill");
         sleep(100, 150);
         main.getInventory().interact(LARGE_POUCH_ID, "Fill");
-        sleep(250, 350);
+        main.getMouse().move(main.getBank().getClosestBank(BankType.BOOTH));
         main.areBigPouchesFull = true;
+        sleep(25, 50);
         return main.sleepTime();
     }
 }

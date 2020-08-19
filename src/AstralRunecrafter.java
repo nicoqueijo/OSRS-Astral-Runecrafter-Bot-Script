@@ -121,9 +121,9 @@ public class AstralRunecrafter extends AbstractScript {
     @Override
     public int onLoop() {
         for (Node node : nodes) {
-            log("Validating: " + node.getClass().getSimpleName());
+            /*log("Validating: " + node.getClass().getSimpleName());*/
             if (node.validate()) {
-                log("Executing: " + node.getClass().getSimpleName());
+                /*log("Executing: " + node.getClass().getSimpleName());*/
                 return node.execute();
             }
             checkStop();

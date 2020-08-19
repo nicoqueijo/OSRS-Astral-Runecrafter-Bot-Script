@@ -17,10 +17,6 @@ public class RunecraftNode extends Node {
         super(main);
     }
 
-    private final int GIANT_POUCH_ID = 5514;
-    private final int LARGE_POUCH_ID = 5512;
-    private final int MEDIUM_POUCH_ID = 5510;
-    private final int SMALL_POUCH_ID = 5509;
     private final int ALTAR_ID = 34771;
     private final Rectangle TELE_GROUP_MOONCLAN_BOUNDS = new Rectangle(654, 251, 8, 8);
     private final int TELE_ANIMATION = 1816;
@@ -62,9 +58,10 @@ public class RunecraftNode extends Node {
         main.getKeyboard().pressShift();
         int loops1 = 0;
         while (main.getInventory().getEmptySlots() >= preEmptySlotCount2) {
-            if (loops1 > 10) {
-                logInfo("Stopping. Infinite spam-click loop.");
-                main.stop();
+            if (loops1 > 15) {
+                /*logInfo("Stopping. Infinite spam-click loop.");
+                main.stop();*/
+                break;
             }
             spamClickPouches(GIANT_POUCH_SUB_RECT, LARGE_POUCH_SUB_RECT);
             loops1++;
@@ -82,9 +79,10 @@ public class RunecraftNode extends Node {
         main.getKeyboard().pressShift();
         int loops2 = 0;
         while (main.getInventory().getEmptySlots() >= preEmptySlotCount4) {
-            if (loops2 > 10) {
-                logInfo("Stopping. Infinite spam-click loop.");
-                main.stop();
+            if (loops2 > 15) {
+                /*logInfo("Stopping. Infinite spam-click loop.");
+                main.stop();*/
+                break;
             }
             spamClickPouches(MEDIUM_POUCH_SUB_RECT, SMALL_POUCH_SUB_RECT);
             loops2++;
